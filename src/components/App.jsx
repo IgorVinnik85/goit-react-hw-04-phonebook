@@ -6,8 +6,8 @@ import StaticContact from '../components/ContactsPhonebook/StaticContact.json';
 import { nanoid } from 'nanoid';
 
 export const App = () => {
-  let [contacts, setContacts] = useState(StaticContact);
-  let [filter, setFilter] = useState('');
+  const [contacts, setContacts] = useState(StaticContact);
+  const [filter, setFilter] = useState('');
   
   useEffect(() => {
     const newContacts = localStorage.getItem('contacts');
