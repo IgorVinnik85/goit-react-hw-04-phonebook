@@ -8,11 +8,7 @@ import { nanoid } from 'nanoid';
 export const App = () => {
   let [contacts, setContacts] = useState(StaticContact);
   let [filter, setFilter] = useState('');
-
-  useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
-
+  
   useEffect(() => {
     const newContacts = localStorage.getItem('contacts');
     const parsedContacts = JSON.parse(newContacts);
@@ -20,6 +16,11 @@ export const App = () => {
       setContacts(parsedContacts);
     }
   }, []);
+  
+  useEffect(() => {
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+  }, [contacts]);
+
 
   const formSubmitHandler = ({ name, number }) => {
     contacts.forEach(element => {
