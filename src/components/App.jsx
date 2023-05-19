@@ -6,29 +6,22 @@ import StaticContact from '../components/ContactsPhonebook/StaticContact.json';
 import { nanoid } from 'nanoid';
 
 export const App = () => {
-  const [contacts, setContacts] = useState(StaticContact);
+  const [contacts, setContacts] = useState(() => {
+    const storedContacts = JSON.parse(localStorage.getItem('contacts'));
+    return storedContacts ? storedContacts : StaticContact;
+  });
   const [filter, setFilter] = useState('');
-  
-  useEffect(() => {
-    const newContacts = localStorage.getItem('contacts');
-    const parsedContacts = JSON.parse(newContacts);
-    if (parsedContacts) {
-      setContacts(parsedContacts);
-    }
-  }, []);
-  
+
   useEffect(() => {
     localStorage.setItem('contacts', JSON.stringify(contacts));
   }, [contacts]);
 
-
   const formSubmitHandler = ({ name, number }) => {
-    contacts.forEach(element => {
-      if (element.name === name) {
-        alert(`${name} is alredy in contacts`);
-        return;
-      }
-    });
+    if (contacts.find(element => element.name === name)) {
+      alert(`${name} is alredy in contacts`);
+      return;
+    }
+
     const objData = {
       name: name,
       number: number,
